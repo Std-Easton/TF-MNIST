@@ -6,5 +6,4 @@ All the codes are written by python. Some packages are based on:
 - cv2
 - PIL
 - matplotlib
-- ...
- ** This repository is still under built **
+**This repository is still under built**
