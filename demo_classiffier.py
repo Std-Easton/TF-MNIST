@@ -5,6 +5,7 @@ import tensorflow as tf
 import cv2
 from PIL import Image, ImageFilter
 import sys
+import types
 
 def weight_variable(shape):
     initial = tf.truncated_normal(shape, stddev=0.1)
@@ -79,7 +80,12 @@ def predictint(imvalue, model_name ="model2.ckpt"):
         return y_conv.eval(feed_dict={x: [imvalue],keep_prob: 1.0}, session=sess)[0]
     
 def imageprepare(name):
-    im = Image.open(name).convert('L')
+    if type(name) is type(np.array([1])):
+        im = Image.fromarray(name)
+    #elif type(name) is type('num_9.png'):
+    else:
+        im = Image.open(name).convert('L')
+#    im = Image.open(name).convert('L')
     width = float(im.size[0])
     height = float(im.size[1])
     newImage = Image.new('L', (28, 28), (255)) #creates white canvas of 28x28 pixels
@@ -101,7 +107,7 @@ def imageprepare(name):
 
     tv = list(newImage.getdata()) #get pixel values
     
-    tva = [ (255-x)*1.0/255.0 for x in tv] 
+    tva = np.array([ (255-x)*1.0/255.0 for x in tv] )
     return tva
 
 
