@@ -1,11 +1,11 @@
 from demo_classiffier import *
 
-name1 ='num_9.png'
-name2 ='num_5.png'
-name3 ='num_4.png'
-nume7 ='num_7-2.png'
-nume8 ='num_8.png'
-name =name1
+num9 ='num_9.png'
+num5 ='num_5.png'
+num4 ='num_4.png'
+num7 ='num_7-2.png'
+num8 ='num_8.png'
+name =num9
 thickness =1.0
 angle =0.0
 scale =1.0
@@ -24,8 +24,7 @@ def refresh(elastic =False):
     global scale
     #plt.axes([0.3, 0.25, 0.5, 0.5])
     #image = cv2.cvtColor(cv2.imread(name), cv2.COLOR_BGR2GRAY)
-    imvalue =imageprepare(name)
-    image =np.asarray(imvalue).reshape(28, 28)
+    image =imageprepare('pics/'+name).reshape(28, 28)
     if elastic:
         image =elastic_transform(image)
     image =thicken(image, thickness)
@@ -33,8 +32,7 @@ def refresh(elastic =False):
 ##    image =zoom(image, scale)
 ##    image =transformation(image, vector)
     ax2.imshow(image,'gray')
-    imvalue =image.reshape(784)
-    predint = predictint(imvalue, "model2-1.ckpt")
+    predint = predictint(image.reshape(784), "model2-1.ckpt")
 
 ##    print 'predicted number: ',(np.argmax(predint)) #first value in list
 ##    print 'confidence rate:' ,max(predint)
@@ -87,14 +85,14 @@ elastic_button.on_clicked(elastic)
 
 ## radio 
 rax = plt.axes([0.025, 0.5, 0.15, 0.15], axisbg=axcolor)
-radio = RadioButtons(rax, (name1, name2, name3,nume7, nume8), active=0)
+radio = RadioButtons(rax, (num9, num5, num4, num7, num8), active=0)
 
-def colorfunc(label):
+def picSelect(label):
     global name
     name =label
     refresh()
     fig.canvas.draw_idle()
-radio.on_clicked(colorfunc)
+radio.on_clicked(picSelect)
 
 
 plt.show()
